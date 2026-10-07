@@ -1,7 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import dogsImage from "../assets/Dogs.jpg";
 
 function HomePage() {
+    const navigate = useNavigate();
+
+    const handleGetStarted = () => {
+        if (localStorage.getItem("token")) {
+            navigate("/home");
+        } else {
+            navigate("/auth");
+        }
+    };
+
     return (
         <div className="container">
 
@@ -22,6 +33,7 @@ function HomePage() {
                         <button
                             type="button"
                             className="btn btn-dark"
+                            onClick={handleGetStarted}
                         >
                             Start a meeting
                         </button>
@@ -29,8 +41,9 @@ function HomePage() {
                         <button
                             type="button"
                             className="btn btn-outline-dark"
+                            onClick={() => navigate("/features")}
                         >
-                            Yes, let's go
+                            Explore features
                         </button>
                     </div>
 
@@ -300,6 +313,7 @@ function HomePage() {
                             width: "100%",
                             maxWidth: "220px",
                         }}
+                        onClick={handleGetStarted}
                     >
                         Start a meeting
                     </button>

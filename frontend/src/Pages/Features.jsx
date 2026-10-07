@@ -1,7 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import featuresImage from "../assets/Features.jpg";
 
 function Features() {
+    const navigate = useNavigate();
+
+    const handleStart = () => {
+        if (localStorage.getItem("token")) {
+            navigate("/home");
+        } else {
+            navigate("/auth");
+        }
+    };
+
     return (
         <div className="container mt-5">
 
@@ -353,6 +364,7 @@ function Features() {
                             width: "100%",
                             maxWidth: "220px",
                         }}
+                        onClick={handleStart}
                     >
                         Start a meeting
                     </button>

@@ -57,6 +57,7 @@ export default function VideoMeetComponent() {
 
     const [showModal, setModal] = useState(false);
     const [videos, setVideos] = useState([]);
+    const [copySuccess, setCopySuccess] = useState(false);
 
     useEffect(() => {
         getPermissions();
@@ -327,18 +328,18 @@ export default function VideoMeetComponent() {
     };
 
     const connectToSocketServer = () => {
-        socketRef.current = io(server_url, {
-            secure: false,
-        });
+        socketRef.current = io(server_url);
 
         socketRef.current.on("signal", gotMessageFromServer);
 
         socketRef.current.on("connect", () => {
             socketIdRef.current = socketRef.current.id;
 
+            const roomName = window.location.pathname.replace(/^\/+|\/+$/g, "") || "main";
+
             socketRef.current.emit(
                 "join-call",
-                window.location.href
+                roomName
             );
 
             socketRef.current.on(
@@ -627,7 +628,31 @@ export default function VideoMeetComponent() {
 
                         <div className={styles.meetingInfo}>
                             <span className={styles.liveDot} />
-                            Live Meeting
+                            <span>Room: {window.location.pathname.replace(/^\/+/, "") || "meet"}</span>
+                            <Button
+                                size="small"
+                                variant="outlined"
+                                onClick={() => {
+                                    navigator.clipboard.writeText(window.location.href);
+                                    setCopySuccess(true);
+                                    setTimeout(() => setCopySuccess(false), 2000);
+                                }}
+                                sx={{
+                                    color: "white",
+                                    borderColor: "rgba(255,255,255,0.3)",
+                                    textTransform: "none",
+                                    fontSize: "12px",
+                                    ml: 1,
+                                    py: 0.3,
+                                    px: 1.2,
+                                    "&:hover": {
+                                        borderColor: "white",
+                                        backgroundColor: "rgba(255,255,255,0.1)"
+                                    }
+                                }}
+                            >
+                                {copySuccess ? "Copied!" : "Copy Link"}
+                            </Button>
                         </div>
                     </div>
 

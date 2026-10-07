@@ -1,8 +1,5 @@
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import './index.css';
-
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 
@@ -15,16 +12,19 @@ import NotFound from './Pages/NotFound.jsx';
 import Authentication from './Pages/Authentication.jsx';
 import HomeComponent from './Pages/home.jsx';
 import History from './Pages/history.jsx';
-
-import { AuthProvider } from './Context/AuthContext.jsx';
 import VideoMeetComponent from './Pages/videomeet.jsx';
+import './App.css';
 
-createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <AuthProvider>
+function App() {
+  const location = useLocation();
 
+  // Show Navbar and Footer only on standard pages, hiding them on video calls and auth
+  const standardPages = ['/', '/about', '/features', '/pricing', '/enterprise', '/home', '/history'];
+  const showNavAndFooter = standardPages.includes(location.pathname);
 
-      <Navbar />
+  return (
+    <div className="appWrapper">
+      {showNavAndFooter && <Navbar />}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -38,8 +38,10 @@ createRoot(document.getElementById('root')).render(
         <Route path="/:url" element={<VideoMeetComponent />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
 
-    </AuthProvider>
-  </BrowserRouter>
-);
+      {showNavAndFooter && <Footer />}
+    </div>
+  );
+}
+
+export default App;

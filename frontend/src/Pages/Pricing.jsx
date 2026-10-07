@@ -1,6 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Pricing() {
+    const navigate = useNavigate();
+
+    const handleGetStarted = () => {
+        if (localStorage.getItem("token")) {
+            navigate("/home");
+        } else {
+            navigate("/auth");
+        }
+    };
+
     return (
         <div className="container mt-5">
 
@@ -43,6 +54,7 @@ function Pricing() {
                         <button
                             type="button"
                             className="btn btn-outline-dark w-100"
+                            onClick={handleGetStarted}
                         >
                             Start Free Trial
                         </button>
@@ -89,6 +101,7 @@ function Pricing() {
                         <button
                             type="button"
                             className="btn btn-dark w-100"
+                            onClick={handleGetStarted}
                         >
                             Start Free Trial
                         </button>
@@ -135,6 +148,7 @@ function Pricing() {
                         <button
                             type="button"
                             className="btn btn-outline-dark w-100"
+                            onClick={() => window.location.href = "mailto:sales@meetflow.com?subject=Enterprise%20Pricing%20Inquiry"}
                         >
                             Contact Us
                         </button>
@@ -313,6 +327,7 @@ function Pricing() {
                             width: "100%",
                             maxWidth: "220px",
                         }}
+                        onClick={handleGetStarted}
                     >
                         Start Free
                     </button>

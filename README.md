@@ -1,54 +1,49 @@
 # MeetFlow 🎥
 
-MeetFlow is a real-time video meeting web application built using **React, Node.js, Express, MongoDB, Socket.IO, and WebRTC**.
+MeetFlow is a modern, real-time video conferencing web application built with **React, Node.js, Express, MongoDB, Socket.IO, and WebRTC**.
 
-It provides user authentication, meeting creation/joining, real-time communication, and video/audio meeting functionality.
+It provides complete user authentication, instant meeting creation, room sharing, real-time messaging, WebRTC audio/video calling, and meeting history tracking.
 
 ---
 
 ## 🚀 Features
 
-- User registration and login
-- Authentication and protected routes
-- Create and join video meetings
-- Real-time communication using Socket.IO
-- Video and audio communication using WebRTC
-- Meeting history
-- Responsive React interface
-- MongoDB database integration
-- REST API using Express.js
-- Frontend and backend deployed separately on Render
+- **Instant & Scheduled Meetings:** Create a new instant meeting or join with a custom meeting room code.
+- **Copy & Share Meeting Links:** One-click copy link in the active meeting room.
+- **User Authentication:** Registration and login with password hashing and persistent token sessions.
+- **WebRTC Audio & Video:** Peer-to-peer video streaming with camera and microphone controls.
+- **Screen Sharing:** Integrated browser display media sharing.
+- **In-Call Real-Time Chat:** Persistent in-room chat powered by Socket.IO.
+- **Meeting History:** View previous meetings and rejoin at any time.
+- **Responsive Modern UI:** Built with Material UI and Bootstrap 5 with dedicated desktop and mobile support.
+- **Health Checks & Production Ready:** `/health` endpoint for monitoring and Render uptime checks.
+- **1-Click Render Deployment:** Includes `render.yaml` Blueprint configuration for zero-friction deployment.
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
 ### Frontend
-
-- React 19
-- Vite
-- React Router
-- Material UI
-- Axios
-- Socket.IO Client
-- WebRTC
-- JavaScript (ES6+)
-- CSS
+- **React 19**
+- **Vite**
+- **React Router 7**
+- **Material UI & Material Icons**
+- **Socket.IO Client**
+- **WebRTC API**
+- **Axios**
 
 ### Backend
-
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- Socket.IO
-- bcrypt
-- CORS
-- dotenv
+- **Node.js**
+- **Express.js**
+- **MongoDB & Mongoose**
+- **Socket.IO**
+- **Bcrypt**
+- **CORS**
+- **Dotenv**
 
 ---
 
-## 📁 Project Structure
+## 📁 Clean Project Structure
 
 ```text
 Meet_Flow/
@@ -56,486 +51,180 @@ Meet_Flow/
 ├── backend/
 │   ├── src/
 │   │   ├── Controller/
-│   │   │   ├── socketManager.js
-│   │   │   └── User.js
-│   │   │
+│   │   │   ├── socketManager.js   # Socket.IO & WebRTC signaling
+│   │   │   └── User.js            # Auth & Meeting history controllers
 │   │   ├── Models/
-│   │   │   ├── User.js
-│   │   │   └── meeting.js
-│   │   │
+│   │   │   ├── meeting.js         # Meeting history schema
+│   │   │   └── User.js            # User accounts schema
 │   │   ├── Routes/
-│   │   │   └── userRoutes.js
-│   │   │
-│   │   └── app.js
-│   │
-│   ├── .env
+│   │   │   └── userRoutes.js      # REST API route handlers
+│   │   └── app.js                 # Server entry point & health checks
+│   ├── .env.example
 │   ├── package.json
 │   └── package-lock.json
 │
-└── frontend/
-    └── Meetflow-frontend-main/
-        ├── public/
-        ├── src/
-        │   ├── Context/
-        │   │   └── AuthContext.jsx
-        │   │
-        │   ├── Pages/
-        │   │   ├── About.jsx
-        │   │   ├── Authentication.jsx
-        │   │   ├── Enterprise.jsx
-        │   │   ├── Features.jsx
-        │   │   ├── history.jsx
-        │   │   ├── home.jsx
-        │   │   ├── HomePage.jsx
-        │   │   ├── NotFound.jsx
-        │   │   ├── Pricing.jsx
-        │   │   └── videomeet.jsx
-        │   │
-        │   ├── Utils/
-        │   │   └── withAuth.jsx
-        │   │
-        │   ├── assets/
-        │   │
-        │   ├── environment.js
-        │   ├── App.jsx
-        │   ├── App.css
-        │   ├── Navbar.jsx
-        │   ├── Footer.jsx
-        │   └── main.jsx
-        │
-        ├── package.json
-        └── vite.config.js
+├── frontend/
+│   ├── public/
+│   │   ├── favicon.svg
+│   │   ├── icons.svg
+│   │   └── logo3.png
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── Context/
+│   │   │   └── AuthContext.jsx    # Auth state & session management
+│   │   ├── Pages/
+│   │   │   ├── About.jsx
+│   │   │   ├── Authentication.jsx
+│   │   │   ├── Enterprise.jsx
+│   │   │   ├── Features.jsx
+│   │   │   ├── history.jsx        # User meeting history & quick rejoin
+│   │   │   ├── home.jsx           # Dashboard with New Meeting & Join Code
+│   │   │   ├── HomePage.jsx       # Landing page
+│   │   │   ├── NotFound.jsx       # Custom 404 page
+│   │   │   ├── Pricing.jsx
+│   │   │   └── videomeet.jsx      # Video conferencing, chat, screen share
+│   │   ├── styles/
+│   │   ├── Utils/
+│   │   ├── App.css
+│   │   ├── App.jsx                # Layout & conditional Navbar/Footer
+│   │   ├── environment.js         # Dynamic backend URL resolver
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   └── main.jsx
+│   ├── .env.example
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── eslint.config.js
+│
+├── render.yaml                    # Render Blueprint deployment config
+└── README.md
 ```
 
 ---
 
-# ⚙️ Local Setup
+## ⚙️ Local Development Setup
 
-## 1. Clone the project
-
+### 1. Clone the repository
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/shikhagaurav02/Meet_Flow.git
 cd Meet_Flow
 ```
 
----
-
-# 🔵 Backend Setup
-
-Open a terminal and navigate to the backend:
+### 2. Configure & Run Backend
 
 ```bash
 cd backend
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-### Create `.env`
-
-Create:
-
-```text
-backend/.env
-```
-
-Add:
-
+Create `backend/.env`:
 ```env
-MONGO_URL=your_mongodb_connection_string
+MONGO_URL=mongodb+srv://<username>:<password>@cluster0.mongodb.net/meetflow?retryWrites=true&w=majority
 PORT=8000
 ```
 
-Example:
-
-```env
-MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net/meetflow
-PORT=8000
-```
-
-> Never commit your `.env` file to GitHub.
-
-### Start the backend
-
-For development:
-
+Start the backend:
 ```bash
+# Development mode:
 npm run dev
-```
 
-For production:
-
-```bash
+# Or standard production mode:
 npm start
 ```
+The backend will run on `http://localhost:8000`. You can verify it at `http://localhost:8000/health`.
 
-The backend will run at:
+### 3. Configure & Run Frontend
 
-```text
-http://localhost:8000
-```
-
----
-
-# 🟢 Frontend Setup
-
-Open another terminal.
-
-Navigate to the actual frontend project:
-
+Open a new terminal window:
 ```bash
-cd frontend/Meetflow-frontend-main
-```
-
-Install dependencies:
-
-```bash
+cd frontend
 npm install
-```
-
-### Configure Backend URL
-
-Open:
-
-```text
-src/environment.js
-```
-
-For local development:
-
-```js
-let IS_PROD = false;
-
-const server = IS_PROD
-    ? "https://meetflow-backend-issc.onrender.com"
-    : "http://localhost:8000";
-
-export default server;
-```
-
-For production:
-
-```js
-let IS_PROD = true;
-
-const server = IS_PROD
-    ? "https://meetflow-backend-issc.onrender.com"
-    : "http://localhost:8000";
-
-export default server;
-```
-
-### Start frontend
-
-```bash
 npm run dev
 ```
 
-The frontend will normally be available at:
-
-```text
-http://localhost:5173
-```
+The frontend will run on `http://localhost:5173`. In development, it automatically connects to `http://localhost:8000`.
 
 ---
 
-# 🔗 Local Application
+## 🌐 Deploying on Render
 
-When both servers are running:
+You can deploy MeetFlow on [Render](https://render.com) using either **Method 1 (Render Blueprint - Recommended)** or **Method 2 (Manual Setup)**.
 
-```text
-Frontend
-http://localhost:5173
-        │
-        │ REST API / Socket.IO
-        ▼
-Backend
-http://localhost:8000
-        │
-        ▼
-MongoDB Atlas
-```
+### Prerequisites: MongoDB Atlas Database
+
+1. Create a free cluster on [MongoDB Atlas](https://www.mongodb.com/atlas).
+2. Create a Database User with read and write permissions.
+3. Under **Network Access**, add `0.0.0.0/0` (Allow Access from Anywhere) so Render servers can connect to your database.
+4. Copy your connection string:
+   ```text
+   mongodb+srv://<username>:<password>@cluster0.mongodb.net/meetflow?retryWrites=true&w=majority
+   ```
 
 ---
 
-# 🌐 Production Deployment
+### Method 1: Deploy with Render Blueprint (`render.yaml`) (Recommended)
 
-MeetFlow can be deployed using:
-
-- **Frontend:** Render Static Site
-- **Backend:** Render Web Service
-- **Database:** MongoDB Atlas
-
-## Backend on Render
-
-Use:
-
-```text
-Build Command:
-npm install
-```
-
-Start command:
-
-```text
-npm start
-```
-
-Add the following environment variables in Render:
-
-```env
-MONGO_URL=your_mongodb_connection_string
-PORT=8000
-```
+1. Push your repository to GitHub.
+2. In your [Render Dashboard](https://dashboard.render.com), click **New +** -> **Blueprint**.
+3. Connect your `Meet_Flow` repository.
+4. Render will automatically detect `render.yaml` and configure both services:
+   - **`meetflow-backend`** (Web Service)
+   - **`meetflow-frontend`** (Static Site)
+5. Enter your `MONGO_URL` when prompted for the backend environment variable.
+6. Click **Apply**. Both the backend and frontend will build and deploy!
+7. Once deployed, copy your backend URL (e.g. `https://meetflow-backend.onrender.com`) and add `VITE_BACKEND_URL` to the frontend Static Site environment variables if you want to explicitly override it.
 
 ---
 
-## Frontend on Render
+### Method 2: Manual Dashboard Setup
 
-Build command:
+#### Step 1: Deploy Backend (Web Service)
 
-```bash
-npm install && npm run build
-```
+1. On Render, click **New +** -> **Web Service**.
+2. Connect your GitHub repository.
+3. Configure settings:
+   - **Name:** `meetflow-backend`
+   - **Language:** `Node`
+   - **Root Directory:** `backend`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+   - **Health Check Path:** `/health`
+4. Add Environment Variables:
+   - `PORT`: `8000`
+   - `MONGO_URL`: `your_mongodb_atlas_connection_string`
+5. Click **Create Web Service**.
+6. Note down your backend URL (e.g. `https://meetflow-backend-xxxx.onrender.com`).
 
-Publish directory:
+#### Step 2: Deploy Frontend (Static Site)
 
-```text
-dist
-```
-
-Before deployment, make sure:
-
-```js
-let IS_PROD = true;
-```
-
-in:
-
-```text
-src/environment.js
-```
-
-The frontend will then use:
-
-```text
-https://meetflow-backend-issc.onrender.com
-```
-
-as the backend server.
-
----
-
-# 🔐 Environment Variables
-
-### Backend
-
-```env
-MONGO_URL=
-PORT=8000
-```
-
-### Frontend
-
-The current project uses `src/environment.js` instead of a frontend `.env` file.
-
-Production:
-
-```js
-let IS_PROD = true;
-```
-
-Local:
-
-```js
-let IS_PROD = false;
-```
+1. On Render, click **New +** -> **Static Site**.
+2. Connect the same GitHub repository.
+3. Configure settings:
+   - **Name:** `meetflow-frontend`
+   - **Root Directory:** `frontend`
+   - **Build Command:** `npm install && npm run build`
+   - **Publish Directory:** `dist`
+4. In **Redirects/Rewrites**:
+   - Add a rewrite rule:
+     - **Type:** `Rewrite`
+     - **Source:** `/*`
+     - **Destination:** `/index.html`
+   *(This ensures client-side routing like `/:url`, `/home`, and `/history` work without 404 errors on page refresh)*
+5. In **Environment Variables**:
+   - `VITE_BACKEND_URL`: `https://meetflow-backend-xxxx.onrender.com` (Your deployed backend URL from Step 1)
+6. Click **Create Static Site**.
 
 ---
 
-# 📡 API
+## 🔒 Important Notes for Production
 
-The backend API uses the following base route:
-
-```text
-/api/v1/users
-```
-
-The backend also uses Socket.IO for real-time meeting communication.
+- **HTTPS Required for Media Permissions:** Modern browsers require HTTPS (secure context) to grant camera and microphone access. Render automatically provisions free SSL/TLS certificates for all deployed services.
+- **WebRTC Signaling:** Socket.IO handles signaling to negotiate peer connections. STUN servers (`stun:stun.l.google.com:19302`) are configured for NAT traversal.
+- **MongoDB IP Whitelist:** Ensure MongoDB Atlas Network Access includes `0.0.0.0/0` to allow inbound connections from Render.
 
 ---
 
-# 🎥 Video Meetings
+## 📜 License
 
-MeetFlow uses:
-
-### WebRTC
-
-WebRTC handles:
-
-- Camera
-- Microphone
-- Peer-to-peer media communication
-
-### Socket.IO
-
-Socket.IO handles real-time signaling and communication between connected users.
-
----
-
-# 🧪 Development Commands
-
-## Frontend
-
-Install:
-
-```bash
-npm install
-```
-
-Development:
-
-```bash
-npm run dev
-```
-
-Production build:
-
-```bash
-npm run build
-```
-
-Preview production build:
-
-```bash
-npm run preview
-```
-
-Lint:
-
-```bash
-npm run lint
-```
-
-## Backend
-
-Install:
-
-```bash
-npm install
-```
-
-Development:
-
-```bash
-npm run dev
-```
-
-Production:
-
-```bash
-npm start
-```
-
----
-
-# 🐛 Common Problems
-
-## `ENOENT: package.json not found`
-
-Make sure you are inside:
-
-```text
-frontend/Meetflow-frontend-main
-```
-
-not:
-
-```text
-frontend
-```
-
-Correct:
-
-```bash
-cd frontend/Meetflow-frontend-main
-npm install
-```
-
----
-
-## MongoDB connection error
-
-Check:
-
-```text
-MONGO_URL
-```
-
-in:
-
-```text
-backend/.env
-```
-
-Also make sure your MongoDB Atlas network access allows your current IP address.
-
----
-
-## Frontend cannot connect to backend
-
-Check:
-
-```text
-src/environment.js
-```
-
-For local development:
-
-```js
-let IS_PROD = false;
-```
-
-For deployed frontend:
-
-```js
-let IS_PROD = true;
-```
-
-Also make sure the backend is running.
-
----
-
-## Camera/Microphone not working
-
-Allow camera and microphone permissions in the browser.
-
-For deployed applications, use HTTPS because browser media permissions require a secure context.
-
----
-
-# 🔒 Security
-
-Do not upload these files to GitHub:
-
-```text
-.env
-.env.local
-node_modules/
-```
-
-Never expose your:
-
-```text
-MongoDB username
-MongoDB password
-API keys
-JWT secrets
-```
-
----
-
-# 👩‍
+This project is licensed under the ISC License.

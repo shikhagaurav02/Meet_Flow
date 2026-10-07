@@ -22,6 +22,7 @@ function Enterprise() {
                             width: "100%",
                             maxWidth: "180px",
                         }}
+                        onClick={() => window.location.href = "mailto:sales@meetflow.com?subject=MeetFlow%20Enterprise%20Inquiry"}
                     >
                         Talk to Sales
                     </button>
@@ -202,7 +203,7 @@ function Enterprise() {
                 <div className="col-12">
 
                     <h5 className="lh-base">
-                        "Migrating 3,000 employees to Nimbus took less than
+                        "Migrating 3,000 employees to MeetFlow took less than
                         two weeks — SSO and SCIM meant IT barely had to touch it."
                     </h5>
 
@@ -298,7 +299,7 @@ function Enterprise() {
                 <div className="col-12 col-md-8 text-center text-md-start">
 
                     <h5 style={{ color: "#25227d" }}>
-                        Ready to roll out Nimbus org-wide?
+                        Ready to roll out MeetFlow org-wide?
                     </h5>
 
                     <h6 style={{ color: "#25227d" }}>
@@ -317,6 +318,7 @@ function Enterprise() {
                             width: "100%",
                             maxWidth: "200px",
                         }}
+                        onClick={() => window.location.href = "mailto:sales@meetflow.com?subject=MeetFlow%20Demo%20Request"}
                     >
                         Book a Demo
                     </button>

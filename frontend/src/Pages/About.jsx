@@ -202,6 +202,7 @@ function About() {
                         type="button"
                         className="btn btn-dark"
                         style={{ width: "100%", maxWidth: "220px" }}
+                        onClick={() => window.location.href = "mailto:careers@meetflow.com?subject=MeetFlow%20Career%20Inquiry"}
                     >
                         View Open Roles
                     </button>

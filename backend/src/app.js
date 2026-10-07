@@ -2,10 +2,14 @@ import "dotenv/config";
 
 import dns from "node:dns";
 
-dns.setServers([
-    "8.8.8.8",
-    "1.1.1.1"
-]);
+try {
+    dns.setServers([
+        "8.8.8.8",
+        "1.1.1.1"
+    ]);
+} catch (e) {
+    // DNS server override is optional
+}
 
 import express from "express";
 import { createServer } from "node:http";
@@ -17,46 +21,60 @@ import userRoutes from "./Routes/userRoutes.js";
 
 const app = express();
 
-app.use(cors());
-
-const httpServer = createServer(app);
-
-const io = connectToSocket(httpServer);
-
-
 app.set("port", process.env.PORT || 8000);
-app.use(cors());
+
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
-app.use("/api/v1/users", userRoutes);
 
-io.on("connection", (socket) => {
-    console.log("User connected:", socket.id);
-
-    socket.on("disconnect", () => {
-        console.log("User disconnected:", socket.id);
+// Health check endpoints for Render and status monitoring
+app.get("/", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        service: "MeetFlow Backend API",
+        version: "1.0.0"
     });
 });
 
+app.get("/health", (req, res) => {
+    const dbState = mongoose.connection.readyState;
+    const states = { 0: "disconnected", 1: "connected", 2: "connecting", 3: "disconnecting" };
+    res.status(200).json({
+        status: "healthy",
+        database: states[dbState] || "unknown",
+        uptime: process.uptime()
+    });
+});
+
+app.use("/api/v1/users", userRoutes);
+
+const httpServer = createServer(app);
+connectToSocket(httpServer);
 
 const start = async () => {
+    const port = app.get("port");
 
+    httpServer.listen(port, () => {
+        console.log(`Server listening on Port ${port}`);
+    });
 
-    try {
-        const connectionDb = await mongoose.connect(process.env.MONGO_URL);
-
-        console.log(
-            `MongoDB connected to Host: ${connectionDb.connection.host}`
-        );
-
-        httpServer.listen(app.get("port"), () => {
-            console.log(`Listening on Port ${app.get("port")}`);
-        });
-
-    } catch (error) {
-        console.log("MongoDB Error:", error.message);
+    if (process.env.MONGO_URL) {
+        try {
+            const connectionDb = await mongoose.connect(process.env.MONGO_URL);
+            console.log(
+                `MongoDB connected to Host: ${connectionDb.connection.host}`
+            );
+        } catch (error) {
+            console.error("MongoDB Connection Error:", error.message);
+        }
+    } else {
+        console.warn("WARNING: MONGO_URL is not set in environment variables.");
     }
 };
-
 
 start();

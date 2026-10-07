@@ -28,6 +28,18 @@ function HomeComponent() {
             navigate(`/${code}`);
         } catch (error) {
             console.error("Unable to join meeting:", error);
+            navigate(`/${code}`);
+        }
+    };
+
+    const handleCreateNewMeeting = async () => {
+        const randomCode = `meet-${Math.random().toString(36).substring(2, 6)}-${Math.random().toString(36).substring(2, 6)}`;
+        try {
+            await addToUserHistory(randomCode);
+            navigate(`/${randomCode}`);
+        } catch (error) {
+            console.error("Unable to create meeting:", error);
+            navigate(`/${randomCode}`);
         }
     };
 
@@ -67,6 +79,24 @@ function HomeComponent() {
                             communication with MeetFlow.
                         </p>
 
+                        <div className="d-flex gap-3 mb-4 flex-wrap">
+                            <Button
+                                variant="contained"
+                                size="large"
+                                startIcon={<VideocamIcon />}
+                                onClick={handleCreateNewMeeting}
+                                sx={{
+                                    borderRadius: 2,
+                                    textTransform: "none",
+                                    py: 1.2,
+                                    px: 3,
+                                    fontWeight: 600,
+                                    backgroundColor: "#1976d2"
+                                }}
+                            >
+                                New Meeting
+                            </Button>
+                        </div>
 
                         {/* JOIN MEETING */}
                         <div className="joinMeetingBox">
